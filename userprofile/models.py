@@ -16,7 +16,7 @@ class State(models.Model):
     
     def __str__(self):
         return self.state
-    
+     
 class Userprofile(models.Model):
     company_image = models.ImageField(null=True, blank= True ,upload_to='uploads/profile_pic')
     user = models.OneToOneField(User, related_name='userprofile', on_delete=models.CASCADE)
@@ -24,7 +24,7 @@ class Userprofile(models.Model):
     company_address = models.CharField(max_length=255, blank=True, null=True, verbose_name='Address')
     website = models.CharField(max_length=225,null=True,blank=True)
     about = models.TextField(blank=True, null=True,)
-    state = models.OneToOneField(State ,max_length=20 ,null=True ,blank=True, on_delete=models.CASCADE)
+    state = models.ForeignKey(State ,max_length=20 ,null=True ,blank=True, on_delete=models.CASCADE)
     lga = models.CharField(max_length=20 ,null=True ,blank=True)
     is_vendor = models.BooleanField(default=False)
   
