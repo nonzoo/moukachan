@@ -1,0 +1,72 @@
+{% extends 'core/base.html' %}
+{% block title %} Edit Account {% endblock %}
+{% block content %}
+    <div class="max-w-6xl mx-auto p-6 min-h-screen">
+        <h1 class="mb-5 text-3xl">Edit Account</h1>
+
+        <form method="post" enctype="multipart/form-data" class="space-y-6">
+            {% csrf_token %}
+
+            {% if form.errors %}
+                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                    <strong class="font-bold">Form submission failed!</strong>
+                    <ul class="mt-1 mb-0 list-disc">
+                        {% for field in form %}
+                            {% if field.errors %}
+                                {% for error in field.errors %}
+                                    <li>{{ field.label }}: {{ error }}</li>
+                                {% endfor %}
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+
+            <div>
+                <label for="id_company_image">Company Image</label>
+                <input type="file" name="company_image" id="id_company_image">
+            </div>
+
+            <div>
+                <label for="id_user">Company Name</label>
+                <label for="id_user">(To Change this contact us)</label>
+                <input type="text" value="{{ user.username }}" readonly class="w-full mt-2 py-4 px-6 bg-gray-100 rounded-xl">
+            </div>
+            
+            <div>
+                <label for="id_company_whatsapp_number">WhatsApp Number</label>
+                {{ form.company_whatsapp_number }}
+            </div>
+
+            <div>
+                <label for="id_website">Company Website(Optional)</label>
+                {{ form.website }}
+            </div>
+
+            <div>
+                <label for="id_state">State</label>
+                {{ form.state }}
+            </div>
+
+            <div>
+                <label for="id_lga">LGA</label>
+                {{ form.lga }}
+            </div>
+
+            <div>
+                <label for="id_company_address">Company Address</label>
+                {{ form.company_address }}
+            </div>
+
+            <div>
+                <label for="id_about">About</label>
+                {{ form.about }}
+            </div>
+
+            <div>
+                <button type="submit" class="py-4 px-6 rounded-xl text-white bg-purple-500">Submit</button>
+            </div>
+        </form>
+        <div><a class="dropdown-item" href="{% url 'password_change'%}">Change password</a></div>
+    </div>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends 'core/base.html' %}
+
+{% block title %} Subscribe {% endblock %}
+
+{% block content %}
+<div style="height:100%;">
+  <h1>Create Subscription</h1>
+  <form method="POST" action="{% url 'create_subscription' %}">
+    {% csrf_token %}
+    <!-- Include subscription form fields here -->
+    <button type="submit">Create Subscription</button>
+  </form>
+</div>
+{% endblock %}

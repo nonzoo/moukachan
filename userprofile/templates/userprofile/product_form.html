@@ -1,0 +1,102 @@
+{% extends 'core/base.html' %}
+
+{% block title %}
+    {{ title }}
+{% endblock %}
+
+{% block content %}
+    <h1 class="text-2xl">{{ title }}</h1>
+
+    <form id="product-form" action="." method="post" enctype="multipart/form-data" class="space-y-5">
+        {% csrf_token %}
+
+        <div>
+            <label for="id_category">Category:</label>
+            {{ form.category }}
+        </div>
+
+        <div>
+            <label for="id_subcategory">Subcategory:</label>
+            <select id="id_subcategory" class="w-full p-4 border border-gray-400" name="subcategory">
+                <!-- Subcategory options -->
+            </select>
+        </div>
+
+        <div class="mb-4">
+            <label for="id_title" class="block">Title:</label>
+            {{ form.title }}
+          </div>
+        
+          <div class="mb-4">
+            <label for="id_description" class="block">Description:</label>
+            {{ form.description }}
+          </div>
+        
+          <div class="mb-4">
+            <label for="id_price" class="block">Price:</label>
+            {{ form.price }}
+          </div>
+        
+          <div class="mb-4">
+            <label for="id_image" class="block">Image:</label>
+            {{ form.image }}
+          </div>
+          <div class="mb-4">
+            <label for="id_image" class="block">Image:</label>
+            {{ form.image_2 }}
+          </div>
+          <div class="mb-4">
+            <label for="id_image" class="block">Image:</label>
+            {{ form.image_3 }}
+          </div>
+          <div class="mb-4">
+            <label for="id_image" class="block">Image:</label>
+            {{ form.image_4 }}
+          </div>
+
+        <button class="mt-4 py-4 px-8 bg-teal-500 text-white hover:bg-teal-800">Submit</button>
+    </form>
+
+    {% if product %}
+        <a href="{% url 'delete_product' product.id %}" class="mt-4 no-underline inline-block py-4 px-8 bg-red-500 text-white hover:bg-red-900">Delete Product</a>
+    {% endif %}
+
+    
+<script>
+   $(document).ready(function() {
+    $('#id_category').change(function() {
+        var categoryId = $(this).val();
+        var subcategorySelect = $('#id_subcategory');
+
+        // Clear existing subcategory options
+        subcategorySelect.empty();
+
+        // Only make the AJAX request if categoryId is a valid number
+        if (!isNaN(categoryId)) {
+            // Make AJAX request to fetch subcategories
+            $.ajax({
+                url: '/get-subcategories/',
+                data: {
+                    category_id: categoryId
+                },
+                success: function(data) {
+                    // Populate subcategory options
+                    $.each(data.subcategories, function(index, subcategory) {
+                        subcategorySelect.append($('<option></option>').attr('value', subcategory.id).text(subcategory.title));
+                    });
+                },
+                error: function(xhr, status, error) {
+                    // Handle error
+                    console.log(error);
+                }
+            });
+        }
+    });
+
+    // Trigger change event on page load to fetch initial subcategory options
+    $('#id_category').change();
+});
+</script>
+
+
+{% endblock %}
