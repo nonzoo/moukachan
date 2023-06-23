@@ -5,107 +5,83 @@
 {% endblock %}
 
 {% block content %}
-<h1 class="text-2xl">{{ user.username }}</h1>
+    <div class="container mx-auto py-8">
+        <div class="bg-white rounded-lg shadow-lg p-6">
+            <h1 class="text-3xl font-bold">{{ user.username }}</h1>
 
-<h2>{{ user.username }} page</h2>
-<div class="grid grid-cols-1 md:grid-cols-2 gap-4 min-h-screen">
-    <div class="md:col-span-1">
-        {% if user.userprofile.company_image %}
-            <img src="{{ user.userprofile.company_image.url }}" alt="Company Image" class="mt-2 w-full">
-        {% else %}
-            <p>No company image available...</p>
-        {% endif %}
-    </div>
-    <div class="md:col-span-1">
-        <h2 class="text-lg font-semibold">Email</h2>
-        <p class="mt-2"><a href="mailto:{{ user.userprofile.company_email }}">{{ user.email }}</a></p>
-    </div>
-    <div class="md:col-span-1">
-        <h2 class="text-lg font-semibold">WhatsApp</h2>
-        <p class="mt-2"><a href="https://wa.me/{{ user.userprofile.company_whatsapp_number }}" text="urlencodetext">{{ user.userprofile.company_whatsapp_number }}</a>
-        </p>
-    </div>
-        {% if user.userprofile.website %}
-            <div class="md:col-span-1">
-                <h2 class="text-lg font-semibold">Company Website</h2>
-                <a href="https://{{ user.userprofile.website }}"><p class="mt-2">{{ user.userprofile.website }}</p></a>
+            <h2 class="text-xl mb-4">{{ user.username }} page</h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    {% if user.userprofile.company_image %}
+                        <img src="{{ user.userprofile.company_image.url }}" alt="Company Image" class="mt-2 w-full">
+                    {% else %}
+                        <p>No company image available...</p>
+                    {% endif %}
+                </div>
+                <div>
+                    <h2 class="text-lg font-semibold">Email</h2>
+                    <p class="mt-2"><a href="mailto:{{ user.userprofile.company_email }}" class="no-underline">{{ user.email }}</a></p>
+                    <h2 class="text-lg font-semibold">WhatsApp</h2>
+                    <p class="mt-2"><a href="https://wa.me/{{ user.userprofile.company_whatsapp_number }}" class="no-underline">{{ user.userprofile.company_whatsapp_number }}</a></p>
+
+                    {% if user.userprofile.website %}
+                        <h2 class="text-lg font-semibold">Company Website</h2>
+                        <a href="https://{{ user.userprofile.website }}" class="text-blue-500 hover:underline">{{ user.userprofile.website }}</a>
+                    {% endif %}
+
+                    <h2 class="text-lg font-semibold">Address</h2>
+                    <p class="mt-2">{{ user.userprofile.company_address }}, {{ user.userprofile.lga }}, {{ user.userprofile.state }}</p>
+
+                    {% if user.userprofile.about %}
+                        <h2 class="text-lg font-semibold">About</h2>
+                        <p class="mt-2">{{ user.userprofile.about }}</p>
+                    {% endif %}
+                </div>
             </div>
-        {% endif %}
-    <div class="md:col-span-1">
-        <h2 class="text-lg font-semibold">Address</h2>
-        <p class="mt-2">{{ user.userprofile.company_address }}, {{user.userprofile.lga}}, {{user.userprofile.state}}</p>
+
+            <div class="text-2xl text-black text-center mt-8">{{ user.username }} Products/Goods</div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-8">
+                {% for product in products %}
+                    <a href="{% url 'product_detail' product.category.slug product.subcategory.slug product.slug %}" class="block bg-white rounded-lg shadow-md overflow-hidden no-underline">
+                        <div class="relative pb-2/3">
+                          <img src="{{ product.get_thumbnail }}" alt="Image of {{ product.title }}" class="object-cover object-center w-full h-full group-hover:opacity-75">
+                        </div>
+                        <div class="p-4">
+                            <h3 class="text-lg font-semibold">{{ product.title }}</h3>
+                            <p class="mt-2 text-gray-700">₦{{ product.price }}</p>
+                        </div>
+                    </a>
+                {% empty %}
+                    <p>No Product under this Vendor</p>
+                {% endfor %}
+            </div>
+
+            {% if products.has_other_pages %}
+                <div class="flex justify-center mt-8">
+                    <nav class="inline-flex">
+                        {% if products.has_previous %}
+                            <a href="?page=1" class="mr-2 px-4 py-2 bg-gray-200 text-gray-700 rounded-full hover:bg-gray-300 no-underline">
+                                <i class="fas fa-angle-double-left mr-2"></i>First
+                            </a>
+                        {% endif %}
+
+                        {% for num in products.paginator.page_range %}
+                            {% if products.number == num %}
+                                <a href="?page={{ num }}" class="mr-2 px-4 py-2 bg-teal-500 text-white rounded-full hover:bg-teal-600 no-underline">{{ num }}</a>
+                            {% elif num > products.number|add:'-3' and num < products.number|add:'3' %}
+                                <a href="?page={{ num }}" class="mr-2 px-4 py-2 bg-gray-200 text-gray-700 rounded-full hover:bg-gray-300 no-underline">{{ num }}</a>
+                            {% endif %}
+                        {% endfor %}
+
+                        {% if products.has_next %}
+                            <a href="?page={{ products.paginator.num_pages }}" class="mr-2 px-4 py-2 bg-gray-200 text-gray-700 rounded-full hover:bg-gray-300 no-underline">
+                                Last<i class="fas fa-angle-double-right ml-2"></i>
+                            </a>
+                        {% endif %}
+                    </nav>
+                </div>
+            {% endif %}
+        </div>
     </div>
-    {% if user.userprofile.about %}
-    <div class="md:col-span-2">
-        <h2 class="text-lg text-justify font-semibold">About</h2>
-        <p class="mt-2">{{ user.userprofile.about }}</p>
-    </div>
-    {% endif %}
-</div>
-
-<div class="text-2xl text-black text-center">{{ user.username }} Products/Goods</div>
-<div class="bg-gray-100">
-  <div class="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
-      <div class="grid grid-cols-2 gap-4 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
-          {% for product in products %}
-          <a href="{% url 'product_detail' product.category.slug product.subcategory.slug product.slug %}" class="group no-underline shadow-sm">
-              <div class="aspect-w-1 aspect-h-1 sm:aspect-w-1 sm:aspect-h-1 md:aspect-w-1 md:aspect-h-1 xl:aspect-w-1 xl:aspect-h-1">
-                  <div class="w-30 h-40 sm:w-30 sm:h-40 overflow-hidden rounded-s-xl bg-gray-200">
-                      <img src="{{ product.get_thumbnail }}" alt="Image of {{ product.title }}" class="object-cover object-center w-full h-full group-hover:opacity-75">
-                  </div>
-              </div> 
-              
-              <h3 class="mt-4 text-sm text-gray-700">{{ product.title }}</h3>
-              <p class="mt-1 text-lg font-medium text-gray-900">₦{{ product.price }}</p>
-          </a>
-          {% empty %}
-          <p>No Product under this Vendor</p>
-          {% endfor %}
-      </div>
-
-      <!-- Pagination links -->
-      <div class="mt-8">
-        {% if products.has_other_pages %}
-          <nav class="flex items-center justify-center">
-            <ul class="pagination">
-              {% if products.has_previous %}
-                <li>
-                  <a href="?page=1" class="flex items-center justify-center w-8 h-8 bg-gray-200 text-gray-700 rounded-full hover:bg-gray-300 no-underline mr-1">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-4 h-4">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-                    </svg>
-                  </a>
-                </li>
-              {% endif %}
-  
-              {% for num in products.paginator.page_range %}
-                {% if products.number == num %}
-                  <li>
-                    <a href="?page={{ num }}" class="flex items-center justify-center w-8 h-8 bg-teal-500 text-white rounded-full hover:bg-teal-600 no-underline mr-1">{{ num }}</a>
-                  </li>
-                {% elif num > products.number|add:'-3' and num < products.number|add:'3' %}
-                  <li>
-                    <a href="?page={{ num }}" class="flex items-center justify-center w-8 h-8 bg-gray-200 text-gray-700 rounded-full hover:bg-gray-300 no-underline mr-1">{{ num }}</a>
-                  </li>
-                {% endif %}
-              {% endfor %}
-  
-              {% if products.has_next %}
-                <li>
-                  <a href="?page={{ products.paginator.num_pages }}" class="flex items-center justify-center w-8 h-8 bg-gray-200 text-gray-700 rounded-full hover:bg-gray-300 no-underline mr-1">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-4 h-4">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                    </svg>
-                  </a>
-                </li>
-              {% endif %}
-            </ul>
-          </nav>
-        {% endif %}
-      </div>
-  </div>
-</div>
-
-  </div>
-  
 {% endblock %}
