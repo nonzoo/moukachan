@@ -1,4 +1,3 @@
-import requests
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User 
 from django.contrib.auth import login 
@@ -11,8 +10,8 @@ from store.forms import ProductForm
 from store.models import Product,Subcategory
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from .validator import validate_unique_email
-
-
+from django.http import JsonResponse
+from .models import Userprofile
 
 def vendor_detail(request, pk):
     user = User.objects.get(pk=pk)
@@ -67,50 +66,27 @@ def my_store(request):
 '''
 
 
-
 def create_subscription(request):
-    if not request.user.is_authenticated:
-        return redirect('login')
-    
-    userprofile = Userprofile.objects.get(user=request.user)
-    
-    # Check if the user is already a vendor
-    if userprofile.is_vendor:
-        return redirect('userprofile/error')
-    
-    # Process payment and subscription creation logic with Interswitch here
-    # Replace the following code with your actual payment gateway integration logic
+    if request.method == "POST":
+        plan = int(request.POST.get("plan"))
+        context = {
+            "plan":plan
+        }
+        messages.success(request, 'You are now a Vendor!')
+        return render(request,"userprofile/subscription_confirm.html", context)
 
-    # Generate the payment request payload
-    payload = {
-        'amount': 10000,  # Replace with the actual subscription amount
-        'currency': 'NGN',
-        'reference': 'SUBSCRIPTION_REF',  # Replace with a unique reference for each subscription
-        'email': userprofile.company_email,
-        # Include other required parameters based on the Interswitch API documentation
-        # ...
-    }
+    return render(request, 'userprofile/my_store.html')
 
-    # Make a POST request to the Interswitch API for payment processing
-    response = requests.post('https://api.interswitch.com/v2/payments', json=payload)
-
-    if response.status_code == 200:
-        # Payment was successful
-        # Update the user's is_vendor field to True
-        userprofile.is_vendor = True
-        userprofile.save()
-        messages.success(request, 'Subscription created successfully.')
-        return redirect('userprofile/success')
-    else:
-        # Payment failed
-        messages.error(request, 'Subscription creation failed.')
-        return redirect('userprofile/error')
+#to update the is_vendor field in userprofile model when the customer subscribe successfully
+@login_required
+def update_vendor_status(request):
+    user_profile = Userprofile.objects.get(user=request.user)
+    user_profile.is_vendor = True
+    user_profile.save()
+    return JsonResponse({'message': 'Vendor status updated successfully'})
     
-def success(request):
-    return render(request, 'userprofile/success.html')
 
-def error(request):
-    return render(request, 'userprofile/error.html')
+
 
 
 
@@ -167,7 +143,7 @@ def edit_product(request, pk):
         'product':product,
         'form':form
     })
-from django.http import JsonResponse
+
 
 
 

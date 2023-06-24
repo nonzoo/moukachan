@@ -1,0 +1,76 @@
+{% extends 'core/base.html' %}
+{% block title %}Confirm Subscription{% endblock %}
+{% block content %}
+<script src="https://js.paystack.co/v1/inline.js"></script>
+
+<h1>Confirm Subscription</h1>
+<div>
+  <form id="paymentForm">
+    <h2>Plan</h2>
+    <div class="form-group">
+        <label for="email">Email Address</label>
+        <input type="email" id="email-address" required />
+    </div>
+    <p>Amount: {{ plan }}</p>
+    <button type="submit" onclick="payWithPaystack()">Confirm Subscription</button>
+  </form>
+</div>
+
+<script>
+  const paymentForm = document.getElementById('paymentForm');
+  paymentForm.addEventListener("submit", payWithPaystack, false);
+
+  function payWithPaystack(e) {
+    e.preventDefault();
+
+    let handler = PaystackPop.setup({
+      key: 'pk_test_c0bba10e97c974cacd7bf97f783c7bbcfee4607f', // Replace with your public key
+      email: document.getElementById("email-address").value,
+      amount: {{ plan }} * 100,
+      ref: '' + Math.floor((Math.random() * 1000000000) + 1),
+      onClose: function () {
+        alert('Window closed.');
+      },
+      callback: function (response) {
+        updateVendorStatus(); // Call the function to update vendor status
+      }
+    });
+
+    handler.openIframe();
+  }
+
+  function updateVendorStatus() {
+    fetch("{% url 'update_vendor_status' %}", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRFToken": getCookie("csrftoken") // Include the CSRF token for Django
+      },
+      body: JSON.stringify({ is_vendor: true })
+    })
+    .then(response => response.json())
+    .then(data => {
+      window.location = "{% url 'my_store' %}";
+    })
+    .catch(error => {
+      console.error("Error:", error);
+    });
+  }
+
+  // Helper function to get the CSRF token
+  function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+      const cookies = document.cookie.split(';');
+      for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim();
+        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+          break;
+        }
+      }
+    }
+    return cookieValue;
+  }
+</script>
+{% endblock %}

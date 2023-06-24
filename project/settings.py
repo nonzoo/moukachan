@@ -28,6 +28,7 @@ CRISPY_TEMPLATE_PACK = "bootstrap5"
 CART_SESSION_ID = 'cart'
 SESSION_COOKIE_AGE = 86400
 
+PAYSTACK_SECRET_KEY = 'sk_test_e9a8cac265680ee00d3181e7e98e338140cab56f'
 
 
 # Application definition

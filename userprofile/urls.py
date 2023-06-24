@@ -21,11 +21,10 @@ urlpatterns = [
 
     path('myaccount/', views.myaccount, name='myaccount'),
     path('edit-account/', views.edit_account, name='edit_account'),
-    path('my-store/', views.my_store, name='my_store'),
+    path('my-store/', views.my_store, name='my_store'), 
     path('create-subscription/', views.create_subscription, name='create_subscription'),
-    path('create-subscription/error/', views.error, name='error'),
-    path('success/', views.success, name='success'),
-    
+    path('update_vendor_status/', views.update_vendor_status, name='update_vendor_status'),
+
     path('my-store/add-product/',views.add_product, name='add_product'),
     path('my-store/edit-product/<int:pk>/', views.edit_product, name='edit_product'),
     path('get-subcategories/', views.get_subcategories, name='get_subcategories'),
