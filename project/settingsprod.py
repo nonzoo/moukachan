@@ -2,7 +2,6 @@ from pathlib import Path
 import os
 
 
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -14,9 +13,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'X7GmQvMnQWVGNzgQyEht3Yh6CSRe6Dw1WqN2XoeAfDA'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ["www.naijaket.com", "naijaket.com"]
 
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'myaccount'
@@ -25,9 +24,12 @@ LOGOUT_REDIRECT_URL = 'frontpage'
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5" 
 
+WEBSITE_URL = 'https://naijaket.com/'
 
 CART_SESSION_ID = 'cart'
 SESSION_COOKIE_AGE = 86400
+
+PAYSTACK_SECRET_KEY = 'sk_test_e9a8cac265680ee00d3181e7e98e338140cab56f'
 
 
 # Application definition
@@ -45,7 +47,7 @@ INSTALLED_APPS = [
     # 3rd Party
     'crispy_forms',
     'crispy_bootstrap5', 
-    #'channels',
+    'channels',
 
     
 ]
@@ -136,8 +138,15 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 
 
-
-DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
-
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp-mail.outlook.com'
+EMAIL_PORT = 587 
+EMAIL_HOST_USER = 'thenaijaket@outlook.com' 
+EMAIL_HOST_PASSWORD = 'NONSOdav@1' 
+EMAIL_USE_TLS = True  
+DEFAULT_FROM_EMAIL = 'NaijaKet <thenaijaket@outlook.com>'

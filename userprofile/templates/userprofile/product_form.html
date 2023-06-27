@@ -5,6 +5,7 @@
 {% endblock %}
 
 {% block content %}
+{% if user.userprofile.is_vendor %}
     <h1 class="text-2xl">{{ title }}</h1>
 
     <form id="product-form" action="." method="post" enctype="multipart/form-data" class="space-y-5">
@@ -97,6 +98,9 @@
     $('#id_category').change();
 });
 </script>
-
+{% else %}
+<h1>Please Subscribe</h1>
+<a href="{% url 'my_store' %}" class="no-underline"><i class="fa fa-arrow-left"></i> My Store</a>
+{% endif %}
 
 {% endblock %}

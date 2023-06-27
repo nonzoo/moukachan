@@ -8,26 +8,28 @@ from django.db.models.signals import post_save
 from datetime import timedelta
 from django.dispatch import receiver
 from apscheduler.schedulers.background import BackgroundScheduler
+from django.utils import timezone
 
 
 
 class State(models.Model):
     state = models.CharField(max_length=20, null=True,blank=True)
     
-    def __str__(self):
+    def __str__(self): 
         return self.state
      
 class Userprofile(models.Model):
-    company_image = models.ImageField(null=True, blank= True ,upload_to='uploads/profile_pic')
+    company_image = models.ImageField(null=True, blank=True, upload_to='uploads/profile_pic')
     user = models.OneToOneField(User, related_name='userprofile', on_delete=models.CASCADE)
-    company_whatsapp_number = PhoneNumberField( null=True, blank= True , verbose_name= 'WhatsApp')
+    company_whatsapp_number = PhoneNumberField(null=True, blank=True, verbose_name='WhatsApp')
     company_address = models.CharField(max_length=255, blank=True, null=True, verbose_name='Address')
-    website = models.CharField(max_length=225,null=True,blank=True)
-    about = models.TextField(blank=True, null=True,)
-    state = models.ForeignKey(State ,max_length=20 ,null=True ,blank=True, on_delete=models.CASCADE)
-    lga = models.CharField(max_length=20 ,null=True ,blank=True)
+    website = models.CharField(max_length=225, null=True, blank=True)
+    about = models.TextField(blank=True, null=True)
+    state = models.ForeignKey(State, max_length=20, null=True, blank=True, on_delete=models.CASCADE)
+    lga = models.CharField(max_length=20, null=True, blank=True)
     is_vendor = models.BooleanField(default=False)
-  
+    vendor_expiry_time = models.DateTimeField(blank=True, null=True)
+
     def __str__(self):
         return self.user.username
       

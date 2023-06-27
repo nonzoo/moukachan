@@ -12,6 +12,9 @@ from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from .validator import validate_unique_email
 from django.http import JsonResponse
 from .models import Userprofile
+from django.http import JsonResponse
+from django.utils import timezone
+from django.views.decorators.http import require_http_methods
 
 def vendor_detail(request, pk):
     user = User.objects.get(pk=pk)
@@ -85,10 +88,6 @@ def update_vendor_status(request):
     user_profile.save()
     return JsonResponse({'message': 'Vendor status updated successfully'})
     
-
-
-
-
 
 
 #for vendors to add product

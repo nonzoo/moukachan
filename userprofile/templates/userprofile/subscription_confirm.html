@@ -1,21 +1,26 @@
 {% extends 'core/base.html' %}
 {% block title %}Confirm Subscription{% endblock %}
 {% block content %}
-<script src="https://js.paystack.co/v1/inline.js"></script>
-
-<h1>Confirm Subscription</h1>
-<div>
-  <form id="paymentForm">
-    <h2>Plan</h2>
-    <div class="form-group">
-        <label for="email">Email Address</label>
-        <input type="email" id="email-address" required />
+<div class="min-h-screen bg-gray-100 flex items-center justify-center">
+  <div class="bg-white max-w-md w-full rounded-lg shadow-md p-6">
+    <h1 class="text-3xl md:text-4xl font-bold text-gray-800 text-center mb-6">Confirm Subscription</h1>
+    <div>
+      <form id="paymentForm">
+        <h2 class="text-lg text-gray-800 mb-4">Plan</h2>
+        <div class="mb-4">
+          <label for="email" class="text-gray-700">Email Address</label>
+          <input type="email" id="email-address" required class="block w-full rounded-md border-gray-600 focus:border-teal-500 focus:ring-teal-500">
+        </div>
+        <p class="text-gray-700">Amount:₦ {{ plan }}</p>
+        <button type="submit" onclick="payWithPaystack()" class="bg-teal-500 hover:bg-teal-600 text-white font-bold py-2 px-4 rounded mt-4 w-full">
+          Confirm Subscription
+        </button>
+      </form>
     </div>
-    <p>Amount: {{ plan }}</p>
-    <button type="submit" onclick="payWithPaystack()">Confirm Subscription</button>
-  </form>
+  </div>
 </div>
 
+<script src="https://js.paystack.co/v1/inline.js"></script>
 <script>
   const paymentForm = document.getElementById('paymentForm');
   paymentForm.addEventListener("submit", payWithPaystack, false);
@@ -24,9 +29,9 @@
     e.preventDefault();
 
     let handler = PaystackPop.setup({
-      key: 'pk_test_c0bba10e97c974cacd7bf97f783c7bbcfee4607f', // Replace with your public key
+      key: 'pk_test_8d4da6e41e39e85363069e66d7b3ea0bb6744fef', // Replace with your public key
       email: document.getElementById("email-address").value,
-      amount: {{ plan }} * 100,
+      amount: "{{ plan }}" * 100,
       ref: '' + Math.floor((Math.random() * 1000000000) + 1),
       onClose: function () {
         alert('Window closed.');
@@ -50,7 +55,7 @@
     })
     .then(response => response.json())
     .then(data => {
-      window.location = "{% url 'my_store' %}";
+      window.location.href = "{% url 'my_store' %}";
     })
     .catch(error => {
       console.error("Error:", error);
