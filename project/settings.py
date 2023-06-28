@@ -1,6 +1,8 @@
 from pathlib import Path
 import os
+from dotenv import load_dotenv
 
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -10,13 +12,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'X7GmQvMnQWVGNzgQyEht3Yh6CSRe6Dw1WqN2XoeAfDA'
+SECRET_KEY = os.getenv('SECRET_KEY')
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["localhost", "127.0.0.1" , "naijaket.com"]
+ALLOWED_HOSTS = ["localhost", "127.0.0.1" , "naijaket.com", 'www.naijaket.com']
 
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'myaccount'
@@ -87,11 +89,11 @@ WSGI_APPLICATION = 'project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'naijaket',
-        'USER' : 'naijaket',
-        'PASSWORD':'NONSOdav@1',
-        'HOST' : 'localhost',
-        'PORT' : ''
+        'NAME': os.getenv('DATABASE_NAME'),
+        'USER': os.getenv('DATABASE_USER'),
+        'PASSWORD': os.getenv('DATABASE_PASSWORD'),
+        'HOST': os.getenv('DATABASE_HOST'),
+        'PORT': os.getenv('DATABASE_PORT'),
     }
 }
 
@@ -145,9 +147,9 @@ MEDIA_ROOT = BASE_DIR / 'media'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp-mail.outlook.com'  # Replace with your SMTP server
-EMAIL_PORT = 587  # Replace with the appropriate port number
-EMAIL_HOST_USER = 'thenaijaket@outlook.com'  # Your Outlook email address
-EMAIL_HOST_PASSWORD = 'NONSOdav@1'  # Your Outlook email password
+EMAIL_HOST = os.getenv('HOST')# Replace with your SMTP server
+EMAIL_PORT = os.getenv('PORT')  # Replace with the appropriate port number
+EMAIL_HOST_USER = os.getenv('HOST_USER')  # Your Outlook email address
+EMAIL_HOST_PASSWORD = os.getenv('PASSWORD')  # Your Outlook email password
 EMAIL_USE_TLS = True  # Use TLS encryption for secure connection
-DEFAULT_FROM_EMAIL = 'NaijaKet <thenaijaket@outlook.com>'
+DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_EMAIL')
