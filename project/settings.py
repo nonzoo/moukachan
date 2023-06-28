@@ -2,7 +2,6 @@ from pathlib import Path
 import os
 
 
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -12,11 +11,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'X7GmQvMnQWVGNzgQyEht3Yh6CSRe6Dw1WqN2XoeAfDA'
-
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ["localhost", "127.0.0.1" , "naijaket.com"]
 
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'myaccount'
@@ -28,6 +28,7 @@ CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 CART_SESSION_ID = 'cart'
 SESSION_COOKIE_AGE = 86400
+
 
 
 # Application definition
@@ -45,8 +46,6 @@ INSTALLED_APPS = [
     # 3rd Party
     'crispy_forms',
     'crispy_bootstrap5', 
-    #'channels',
-
     
 ]
 
@@ -87,8 +86,12 @@ WSGI_APPLICATION = 'project.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'naijaket',
+        'USER' : 'naijaket',
+        'PASSWORD':'NONSOdav@1',
+        'HOST' : 'localhost',
+        'PORT' : ''
     }
 }
 
@@ -136,8 +139,15 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 
 
-
-DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
-
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp-mail.outlook.com'  # Replace with your SMTP server
+EMAIL_PORT = 587  # Replace with the appropriate port number
+EMAIL_HOST_USER = 'thenaijaket@outlook.com'  # Your Outlook email address
+EMAIL_HOST_PASSWORD = 'NONSOdav@1'  # Your Outlook email password
+EMAIL_USE_TLS = True  # Use TLS encryption for secure connection
+DEFAULT_FROM_EMAIL = 'NaijaKet <thenaijaket@outlook.com>'

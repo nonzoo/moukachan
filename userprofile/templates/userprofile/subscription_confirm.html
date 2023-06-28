@@ -7,10 +7,12 @@
     <div>
       <form id="paymentForm">
         <h2 class="text-lg text-gray-800 mb-4">Plan</h2>
+
         <div class="mb-4">
-          <label for="email" class="text-gray-700">Email Address</label>
-          <input type="email" id="email-address" required class="block w-full rounded-md border-gray-600 focus:border-teal-500 focus:ring-teal-500">
+          <label for="first-name" class="text-gray-700">Full Name</label>
+          <input type="first-name" id="first-name" required class="block w-full rounded-md border-gray-600 focus:border-teal-500 focus:ring-teal-500">
         </div>
+
         <p class="text-gray-700">Amount:₦ {{ plan }}</p>
         <button type="submit" onclick="payWithPaystack()" class="bg-teal-500 hover:bg-teal-600 text-white font-bold py-2 px-4 rounded mt-4 w-full">
           Confirm Subscription
@@ -29,10 +31,12 @@
     e.preventDefault();
 
     let handler = PaystackPop.setup({
-      key: 'pk_live_2ffbe1a2d69ffbdeed2a8e2290717b72af2a0d01',
-      email: document.getElementById("email-address").value,
-      amount: "{{ plan }}" * 100,
-      ref: '' + Math.floor((Math.random() * 1000000000) + 1),
+      key: 'pk_test_8d4da6e41e39e85363069e66d7b3ea0bb6744fef',
+      email: '{{request.user.email}}', //user email
+      firstname: document.getElementById("first-name").value, // the customer username
+      lastname: '{{request.user.username}}',
+      plan : 'PLN_tsh6atfqo17r3yn', // plan code
+      ref: 'NKet-' + Math.floor((Math.random() * 1000000000) + 1), // reference number
       onClose: function () {
         alert('Window closed.');
       },
