@@ -15,7 +15,7 @@ from .models import Product
 class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
-        fields = ('category' ,'subcategory', 'title', 'description', 'price', 'image','image_2','image_3','image_4',)
+        fields = ('category' ,'subcategory', 'title', 'description', 'price', 'image','image_2','image_3','image_4','condition')
         widgets = {
             'category': forms.Select(attrs={
                 'class': 'w-full p-4 border border-gray-400'
@@ -43,5 +43,8 @@ class ProductForm(forms.ModelForm):
             }),
             'image_4': forms.FileInput(attrs={
                 'class':'w-full p-4 border border-gray-400'
+            }),
+             'condition': forms.Select(attrs={
+                'class': 'w-full p-4 border border-gray-400'
             }),
         }

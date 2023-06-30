@@ -19,7 +19,7 @@
         <div>
             <label for="id_subcategory">Subcategory:</label>
             <select id="id_subcategory" class="w-full p-4 border border-gray-400" name="subcategory">
-                <!-- Subcategory options -->
+                
             </select>
         </div>
 
@@ -54,7 +54,10 @@
             <label for="id_image" class="block">Image:</label>
             {{ form.image_4 }}
           </div>
-
+          <div>
+            <label for="id_condition">Condition:</label>
+            {{ form.condition }}
+        </div>
         <button class="mt-4 py-4 px-8 bg-teal-500 text-white hover:bg-teal-800">Submit</button>
     </form>
 

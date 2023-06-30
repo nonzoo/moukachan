@@ -5,7 +5,7 @@ module.exports = {
     './core/templates/**/*.html', // Include template files in the core app's templates folder
     './store/templates/**/*.html', // Include template files in the store app's templates folder
     './userprofile/templates/**/*.html', // Include template files in the userprofile app's templates folder
-    // Add more paths for other template folders or apps as needed
+    
   ],
   theme: {
     extend: {},

@@ -19,6 +19,7 @@ class Category(models.Model):
         ordering = ('title',)
 
 
+
 class Subcategory(models.Model):
     title = models.CharField(max_length=50)
     slug = models.SlugField(max_length=50)
@@ -45,7 +46,7 @@ class Product(models.Model):
         (ACTIVE, 'Active'),
         (DELETED, 'Deleted'),
     )
-
+    
     user = models.ForeignKey(User, related_name='products', on_delete=models.CASCADE)
     category = models.ForeignKey(Category, related_name='products', on_delete=models.CASCADE)
     subcategory = models.ForeignKey(Subcategory, related_name='products', on_delete=models.CASCADE , null=True, blank=True)
@@ -59,6 +60,10 @@ class Product(models.Model):
     image_3 = models.ImageField(upload_to='uploads/product_images', blank=True, null=True)
     image_4 = models.ImageField(upload_to='uploads/product_images', blank=True, null=True)
     thumbnail = models.ImageField(upload_to='uploads/product_images/thumbnail', blank=True, null=True)
+    condition = models.CharField(max_length=50, null=True, blank=True ,choices=(
+        ('New','New'),
+        ('Used', 'Used')
+    ))
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     status = models.CharField(max_length=50, choices=STATUS_CHOICES, default=ACTIVE)

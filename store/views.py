@@ -36,8 +36,6 @@ def search(request):
                 Q(user__username__icontains = keyword)
             )
 
-
-
     #PAGINATION FOR SEARCH
     paginator = Paginator(products, 10)  # Show 10 products per page
     page_number = request.GET.get('page')

@@ -1,9 +1,9 @@
 {% extends 'core/base.html' %}
 {% block title %} Edit Account {% endblock %}
 {% block content %}
-    <div class="max-w-6xl mx-auto p-6 min-h-screen">
+    <div class="max-w-7xl mx-auto my-auto min-h-screen">
         <h1 class="mb-5 text-3xl">Edit Account</h1>
-
+        <div>
         <form method="post" enctype="multipart/form-data" class="space-y-6">
             {% csrf_token %}
 
@@ -29,7 +29,7 @@
 
             <div>
                 <label for="id_user">Company Name</label>
-                <label for="id_user">(To Change this contact us)</label>
+                <label for="id_user">(To Change this, <a href="mailto:thenaijaket@outlook.com" class="no-underline">contact us</a>)</label>
                 <input type="text" value="{{ user.username }}" readonly class="w-full mt-2 py-4 px-6 bg-gray-100 rounded-xl">
             </div>
             
@@ -68,5 +68,6 @@
             </div>
         </form>
         <div><a class="dropdown-item" href="{% url 'password_change'%}">Change password</a></div>
+        </div>
     </div>
 {% endblock %}
