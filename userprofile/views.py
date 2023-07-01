@@ -12,9 +12,21 @@ from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from .validator import validate_unique_email
 from django.http import JsonResponse
 from .models import Userprofile
-from django.http import JsonResponse
 from django.utils import timezone
 from django.views.decorators.http import require_http_methods
+from django.core.mail import send_mail, BadHeaderError
+from django.http import HttpResponse
+from django.contrib.auth.forms import PasswordResetForm
+from django.template.loader import render_to_string
+from django.db.models.query_utils import Q
+from django.utils.http import urlsafe_base64_encode
+from django.contrib.auth.tokens import default_token_generator
+from django.utils.encoding import force_bytes
+from django.core.mail import EmailMultiAlternatives
+from django import template
+from django.conf import settings
+
+
 
 def vendor_detail(request, pk):
     user = User.objects.get(pk=pk)
@@ -202,6 +214,39 @@ def signup(request):
     })
 
 
+
+def password_reset_request(request):
+	if request.method == "POST":
+		password_reset_form = PasswordResetForm(request.POST)
+		if password_reset_form.is_valid():
+			data = password_reset_form.cleaned_data['email']
+			associated_users = User.objects.filter(Q(email=data)|Q(username=data))
+			if associated_users.exists():
+				for user in associated_users:
+					subject = "Password Reset Requested"
+					plaintext = template.loader.get_template('userprofile/password_reset_email.txt')
+					htmltemp = template.loader.get_template('userprofile/password_reset_email.html')
+					c = { 
+					"email":user.email,
+					'domain': request.get_host,
+					'site_name': 'Naijaket',
+					"uid": urlsafe_base64_encode(force_bytes(user.pk)),
+					"user": user,
+					'token': default_token_generator.make_token(user),
+					'protocol': request.scheme,
+					}
+					text_content = plaintext.render(c)
+					html_content = htmltemp.render(c)
+					try:
+						msg = EmailMultiAlternatives(subject, text_content, 'Naijaket <thenaijaket@outlook.com>', [user.email], headers = {'Reply-To': 'thenaijaket@outlook.com'})
+						msg.attach_alternative(html_content, "text/html")
+						msg.send()
+					except BadHeaderError:
+						return HttpResponse('Invalid header found.')
+					messages.info(request, "Password reset instructions have been sent to the email address entered.")
+					return redirect ("password_reset_done")
+	password_reset_form = PasswordResetForm()
+	return render(request=request, template_name="userprofile/password_reset_form.html", context={"password_reset_form":password_reset_form})
 
 def privacy(request):
     return render(request, 'userprofile/privacy.html')
