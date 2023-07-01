@@ -12,20 +12,15 @@ from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from .validator import validate_unique_email
 from django.http import JsonResponse
 from .models import Userprofile
-from django.utils import timezone
-from django.views.decorators.http import require_http_methods
 from django.core.mail import send_mail, BadHeaderError
 from django.http import HttpResponse
 from django.contrib.auth.forms import PasswordResetForm
-from django.template.loader import render_to_string
 from django.db.models.query_utils import Q
 from django.utils.http import urlsafe_base64_encode
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.encoding import force_bytes
 from django.core.mail import EmailMultiAlternatives
 from django import template
-from django.conf import settings
-
 
 
 def vendor_detail(request, pk):

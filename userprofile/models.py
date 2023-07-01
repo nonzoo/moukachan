@@ -1,14 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import User
 from phonenumber_field.modelfields import PhoneNumberField
-from store.models import Product
 from django.db.models import Q
-from django.utils import timezone
-from django.db.models.signals import post_save
-from datetime import timedelta
-from django.dispatch import receiver
-from apscheduler.schedulers.background import BackgroundScheduler
-from django.utils import timezone
+
+
+
 
 
 
