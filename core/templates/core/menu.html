@@ -1,21 +1,62 @@
+<style>
+  /* For mobile devices */
+  @media (max-width: 899px) {
+    .desktop {
+      display: none;
+    }
+  }
 
 
-<div class="dropdown">
-    <button class="btn btn-secondary rounded-2 dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-      Categories
-    </button>
-    <ul class="dropdown-menu" aria-labelledby="categoryDropdown">
-      {% for category in categories %}
-        <li>
-          <a class="dropdown-item" href="{% url 'category_detail' category.slug %}">
-            {{ category.title }}
-          </a>
-        </li>
-      {% endfor %}
-    </ul>
-  </div>
+  /* For desktop devices */
+  @media (min-width: 900px) {
+    .mobile {
+      display: none;
+    }
   
-
-
-
-
+    .desktop {
+      display: flex;
+      justify-content: center;
+    }
+  
+    .desktop .space-x-1 {
+      display: flex;
+      gap: 6px;
+    }
+  
+    .desktop .space-x-1 a {
+      text-decoration: none;
+      color: white;
+    }
+  
+    .desktop .space-x-1 a:hover {
+      color: rgb(67, 196, 235);
+    }
+  }
+</style>
+  
+<!-- Mobile and Tablet View -->
+<div class="dropdown mobile">
+  <button class="btn btn-secondary rounded-2 dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+    Categories
+  </button>
+  <ul class="dropdown-menu" aria-labelledby="categoryDropdown">
+    {% for category in categories %}
+    <li>
+      <a class="dropdown-item" href="{% url 'category_detail' category.slug %}">
+        {{ category.title }}
+      </a>
+    </li>
+    {% endfor %}
+  </ul>
+</div>
+  
+<!-- Desktop View -->
+<div class="desktop">
+  <div class="space-x-1 hover">
+    {% for category in categories %}
+    <a href="{% url 'category_detail' category.slug %}">
+      {{ category.title }}
+    </a>
+    {% endfor %}
+  </div>
+</div>
