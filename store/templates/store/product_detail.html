@@ -5,11 +5,7 @@
 {% endblock %}
 
 {% block content %}
-<meta charset="UTF-8">
-<meta property="og:title" content="{{product.title}}">
-<meta property="og:description" content="{{product.description}}">
-<meta property="og:image" content="{{product.image}}">
-<meta property="og:url" content="{% url 'product_detail' product.category.slug product.subcategory.slug product.slug %}">
+
 <style>
     .carousel-image {
     width: 400px;
