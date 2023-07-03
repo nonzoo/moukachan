@@ -1,7 +1,12 @@
 {% extends 'core/base.html' %}
 
-{% block title %}
-    {{ product.title }}
+{% block title %}{{ product.title }}{% endblock %}
+
+{% block meta %}
+<meta property="og:title" content="{{product.title}}">
+<meta property="og:description" content="{{ product.description }}">
+<meta property="og:image" content="{{ product.image.url }}">
+<meta property="og:url" content="{{ protocol }}://{{ domain }}{% url 'product_detail' product.category.slug product.subcategory.slug product.slug %}">
 {% endblock %}
 
 {% block content %}
@@ -97,7 +102,7 @@
                         </a>
                     </p>
                     <p>
-                        <a href="https://wa.me/{{ owner_profile.company_whatsapp_number }}?text=I am interested in this Item      {{ protocol }}://{{ domain }}{% url 'product_detail' product.category.slug product.subcategory.slug product.slug %}" class="block text-center">
+                        <a href="https://wa.me/{{ owner_profile.company_whatsapp_number }}?text=I am interested in this Item -- {{ protocol }}://{{ domain }}{% url 'product_detail' product.category.slug product.subcategory.slug product.slug %}" class="block text-center">
                             <button type="button" class="w-full py-2 px-4 bg-green-500 text-white rounded-md hover:bg-green-600">WhatsApp</button>
                         </a>
                     </p>
