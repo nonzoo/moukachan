@@ -98,6 +98,9 @@ def subcategory_detail(request, category_slug, subcategory_slug):
         'category': category,
         'subcategory': subcategory,
         'products': products
+        
+
+
     })
 
 #PRODUCT DETAIL VIEW
@@ -112,7 +115,10 @@ def product_detail(request, category_slug, subcategory_slug, slug):
         'category': category,
         'subcategory': subcategory,
         'product': product,
-        'owner_profile': owner_profile,  # Pass the UserProfile instance to the template
+        'owner_profile': owner_profile, # Pass the UserProfile instance to the template
+        'domain': request.get_host,
+        'protocol': request.scheme,  
+        
     })
 
     
