@@ -16,7 +16,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["localhost", "127.0.0.1" , "naijaket.com", 'www.naijaket.com','146.190.217.154']
+ALLOWED_HOSTS = ["localhost", "127.0.0.1" , "naijaket.com", 'www.naijaket.com','161.35.186.111']
 
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'myaccount'
