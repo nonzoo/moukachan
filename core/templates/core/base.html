@@ -10,8 +10,8 @@
   <meta name="description" content="Discover amazing deals on our e-commerce store. Shop for a wide range of products including electronics, clothing, and more.">
   <meta name="keywords" content="e-commerce, online store, best deals, electronics, clothing">
   <meta property="og:title" content="{{product.title}}">
-<meta property="og:description" content="{{product.description}}">
-<meta property="og:image" content="{{product.image}}">
+<meta property="og:description" content="{{ product.description }}">
+<meta property="og:image" content="{{ product.image }}">
 <meta property="og:url" content="{% url 'product_detail' product.category.slug product.subcategory.slug product.slug %}">
   <link rel="shortcut icon" type="image" href="/media/uploads/flag_logo.png">
 
