@@ -58,11 +58,11 @@
             <label for="id_condition">Condition (optional):</label>
             {{ form.condition }}
         </div>
-        <button class="mt-4 py-4 px-8 bg-teal-500 text-white hover:bg-teal-800">Submit</button>
+        <button class="mt-4 py-4 px-6 rounded-xl bg-teal-500 text-white hover:bg-teal-800">Submit</button>
     </form>
 
     {% if product %}
-        <a href="{% url 'delete_product' product.id %}" class="mt-4 no-underline inline-block py-4 px-8 bg-red-500 text-white hover:bg-red-900">Delete Product</a>
+        <a href="{% url 'delete_product' product.id %}" class="mt-4 no-underline inline-block  py-4 px-6 rounded-xl bg-red-500 text-white hover:bg-red-900">Delete Product</a>
     {% endif %}
 
     

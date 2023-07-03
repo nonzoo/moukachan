@@ -87,7 +87,7 @@
             <!--Product Details-->
             <div class="space-y-4">
                 <h1 class="text-2xl font-bold">{{ product.title }}</h1>
-                <p class="text-xl font-bold mt-44">₦{{ product.price }}</p>
+                <p class="text-xl font-bold mt-44">₦{{ product.formatted_price }}</p>
                 <p>More from - <a href="{% url 'vendor_detail' product.user.id %}" class="text-teal-500">{{ product.user.username }}</a></p>
 
                 {% if request.user.is_authenticated %}

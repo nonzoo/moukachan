@@ -5,7 +5,7 @@ from PIL import Image
 from io import BytesIO
 from django.utils.text import slugify
 from random import randint
-
+from django.contrib.humanize.templatetags.humanize import intcomma
 
 
 class Category(models.Model):
@@ -54,13 +54,13 @@ class Product(models.Model):
     slug = models.SlugField(max_length=50)
     userprofile = models.ForeignKey('userprofile.Userprofile', related_name='products', on_delete=models.CASCADE, null=True, blank=True)
     description = models.TextField(blank=True)
-    price = models.DecimalField(max_digits=12, decimal_places=2)
+    price = models.IntegerField()
     image = models.ImageField(upload_to='uploads/product_images', null=True)
     image_2 = models.ImageField(upload_to='uploads/product_images', blank=True, null=True)
     image_3 = models.ImageField(upload_to='uploads/product_images', blank=True, null=True)
     image_4 = models.ImageField(upload_to='uploads/product_images', blank=True, null=True)
     thumbnail = models.ImageField(upload_to='uploads/product_images/thumbnail', blank=True, null=True)
-    condition = models.CharField(max_length=50, null=True, blank=True ,choices=(
+    condition = models.CharField(max_length=50, null=True, blank=True , default='New',choices=(
         ('New','New'),
         ('Used', 'Used')
     ))
@@ -76,6 +76,8 @@ class Product(models.Model):
 
     
 
+    def formatted_price(self):
+        return intcomma(self.price)
 
     # a method used to create a unique slug
     def save(self, *args, **kwargs):
