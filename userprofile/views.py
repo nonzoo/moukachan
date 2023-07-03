@@ -205,7 +205,10 @@ def signup(request):
       form = SignUpForm()
 
     return render(request, 'userprofile/signup.html',{
-        'form':form
+        'form':form,
+        'domain': request.get_host,
+        'protocol': request.scheme, 
+
     })
 
 

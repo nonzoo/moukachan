@@ -2,6 +2,12 @@
 
 {% block title %}Sign Up{% endblock %}
 
+{% block meta %}
+<meta name="title" content="Signup">
+<meta name="description" content="NaijaKet Signup page">
+<meta property="og:url" content="{{ protocol }}://{{ domain }}{% url 'signup' %}">
+{% endblock %}
+
 {% block content %}
 <div class="max-w-lg mx-auto flex flex-wrap p-6">
     <div class="w-full bg-gray-200 p-6 rounded-xl">
@@ -58,7 +64,7 @@
 
             <div>
                 <button class="py-4 px-6 rounded-xl text-white bg-teal-500 hover:bg-teal-700">SignUp</button>
-                <p>Do you have an account? <a href="{% url 'login' %}">Login</a></p>
+                <p>Do you have an account? <a href="{% url 'login' %}" class="no-underline">Login</a></p>
                 <p><input type="checkbox" id="accept-terms" name="accept-terms" class="mr-2"><a href="{% url 'privacy' %}" class="no-underline">Privacy Policy & Terms of use</a></p>
             </div>
         </form>
