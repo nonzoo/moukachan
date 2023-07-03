@@ -12,34 +12,34 @@
         {% csrf_token %}
 
         <div>
-            <label for="id_category">Category:</label>
+            <label for="id_category">Category*:</label>
             {{ form.category }}
         </div>
 
         <div>
-            <label for="id_subcategory">Subcategory:</label>
+            <label for="id_subcategory">Subcategory*:</label>
             <select id="id_subcategory" class="w-full p-4 border border-gray-400" name="subcategory">
                 
             </select>
         </div>
 
         <div class="mb-4">
-            <label for="id_title" class="block">Title:</label>
+            <label for="id_title" class="block">Title*:</label>
             {{ form.title }}
           </div>
         
           <div class="mb-4">
-            <label for="id_description" class="block">Description:</label>
+            <label for="id_description" class="block">Description*:</label>
             {{ form.description }}
           </div>
         
           <div class="mb-4">
-            <label for="id_price" class="block">Price:</label>
+            <label for="id_price" class="block">Price*:</label>
             {{ form.price }}
           </div>
         
           <div class="mb-4">
-            <label for="id_image" class="block">Image:</label>
+            <label for="id_image" class="block">Image*:</label>
             {{ form.image }}
           </div>
           <div class="mb-4">
@@ -55,7 +55,7 @@
             {{ form.image_4 }}
           </div>
           <div>
-            <label for="id_condition">Condition:</label>
+            <label for="id_condition">Condition (optional):</label>
             {{ form.condition }}
         </div>
         <button class="mt-4 py-4 px-8 bg-teal-500 text-white hover:bg-teal-800">Submit</button>
