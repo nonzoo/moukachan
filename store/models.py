@@ -59,7 +59,6 @@ class Product(models.Model):
     image_2 = models.ImageField(upload_to='uploads/product_images', blank=True, null=True)
     image_3 = models.ImageField(upload_to='uploads/product_images', blank=True, null=True)
     image_4 = models.ImageField(upload_to='uploads/product_images', blank=True, null=True)
-    thumbnail = models.ImageField(upload_to='uploads/product_images/thumbnail', blank=True, null=True)
     condition = models.CharField(max_length=50, null=True, blank=True , default='New',choices=(
         ('New','New'),
         ('Used', 'Used')
@@ -90,35 +89,9 @@ class Product(models.Model):
 
 
     #to automatically generate a thumbnail based on the image 
-    def get_thumbnail(self):
-        if self.thumbnail:
-            return self.thumbnail.url
-        else:
-            if self.image:
-                self.thumbnail = self.make_thumbnail(self.image)
-                self.save()
-
-                return self.thumbnail.url
-            else:
-                return '/media/uploads/product_images/image-unavailable.png'
-            
 
 
 
-
-
-    #to generate a thumbnail
-    def make_thumbnail(self, image, size=(300, 300)):
-        img = Image.open(image)
-        img.convert('RGB')
-        img.thumbnail(size)
-        thumb_io = BytesIO()
-        #img.save(thumb_io, 'JPEG', quality=85)
-        img.save(thumb_io, 'PNG', quality=85)
-        name = image.name.replace('uploads/product_images/', '')
-        thumbnail = File(thumb_io, name=name)
-
-        return thumbnail
 
 
 
