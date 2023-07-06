@@ -155,9 +155,15 @@ def edit_product(request, pk):
 
 def get_subcategories(request):
     category_id = request.GET.get('category_id')
-    subcategories = Subcategory.objects.filter(category_id=category_id).values('id', 'title')
 
-    return JsonResponse({'subcategories': list(subcategories)})
+    if category_id is not None and category_id.isdigit():
+        # Valid category_id, proceed with filtering subcategories
+        subcategories = Subcategory.objects.filter(category_id=int(category_id)).values('id', 'title')
+        return JsonResponse({'subcategories': list(subcategories)})
+    else:
+        # Invalid or missing category_id, return an error response
+        return JsonResponse({'error': 'Invalid or missing category_id'}, status=400)
+
 
 
 @login_required

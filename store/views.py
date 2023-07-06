@@ -31,6 +31,8 @@ def search(request):
         for keyword in keywords:
             products = products.filter(
                 Q(title__icontains=keyword) |
+                Q(brand__icontains=keyword)|
+                Q(model__icontains=keyword)|
                 Q(user__userprofile__state__state__icontains=keyword) |
                 Q(user__userprofile__lga__icontains=keyword)|
                 Q(user__username__icontains = keyword)

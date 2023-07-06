@@ -3,6 +3,7 @@
 {% block title %}{{ user.username }}{% endblock %}
 {% block meta %}
 <meta name="title" content="{{ user.username }}'s page">
+<meta property="og:image" content="{{ company_image.url }}">
 {% endblock %}
 {% block content %}
     <div class="container mx-auto py-8">
@@ -14,9 +15,9 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                     {% if user.userprofile.company_image %}
-                        <img src="{{ user.userprofile.company_image.url }}" alt="Company Image" class="mt-2 w-full">
+                        <img src="{{ user.userprofile.company_image.url }}" alt="Company Image" class="mt-2 w-full rounded-full">
                     {% else %}
-                        <p>No company image available...</p>
+                        <img src="/media/uploads/profile.png" alt="profile pic">
                     {% endif %}
                 </div>
                 <div>

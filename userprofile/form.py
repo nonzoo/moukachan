@@ -19,12 +19,12 @@ class EditAccountForm(forms.ModelForm):
         fields = ['company_image', 'company_whatsapp_number', 'company_address', 'about', 'state', 'lga', 'website' ]
         widgets = {
             'company_image': forms.ClearableFileInput(attrs={'class': 'w-full mt-2 py-4 px-6 bg-gray-100 rounded-xl'}),
-            'company_whatsapp_number': forms.TextInput(attrs={'class': 'w-full mt-2 py-4 px-6 bg-gray-100 rounded-xl'}),
+            'company_whatsapp_number': forms.TextInput(attrs={'class': 'w-full mt-2 py-4 px-6 bg-gray-100 rounded-xl','placeholder':'Eg:+2348161728112'}),
             'website':forms.TextInput(attrs={'class': 'w-full mt-2 py-4 px-6 bg-gray-100 rounded-xl'}),
             'state': forms.Select(attrs={'class': 'w-full mt-2 py-4 px-6 bg-gray-100 rounded-xl'}),
             'lga': forms.TextInput(attrs={'class': 'w-full mt-2 py-4 px-6 bg-gray-100 rounded-xl'}),
             'company_address': forms.TextInput(attrs={'class': 'w-full mt-2 py-4 px-6 bg-gray-100 rounded-xl'}),
-            'about': forms.Textarea(attrs={'class': 'w-full mt-2 py-4 px-6 bg-gray-100 rounded-xl'}),
+            'about': forms.Textarea(attrs={'class': 'w-full mt-2 py-4 px-6 bg-gray-100 rounded-xl','placeholder':'Make your customers know you, tell us about your company'}),
 
         }
 

@@ -9,9 +9,9 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div class="md:col-span-1">
                 {% if user.userprofile.company_image %}
-                    <img src="{{ user.userprofile.company_image.url }}" alt="Company Image" class="mt-2 w-full">
+                    <img src="{{ user.userprofile.company_image.url }}" alt="Company Image" class="mt-2 w-full rounded-full">
                 {% else %}
-                    <p>No company image available.</p>
+                    <img src="/media/uploads/profile.png" alt="profile pic">
                 {% endif %}
             </div>
             <div class="md:col-span-1">

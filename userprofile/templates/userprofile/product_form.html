@@ -21,11 +21,21 @@
             </select>
         </div>
 
-        <div class="mb-4">
+          <div class="mb-4">
             <label for="id_title" class="block">Title*:</label>
             {{ form.title }}
           </div>
-        
+
+          <div class="mb-4">
+            <label for="id_brand" class="block">Brand:</label>
+            {{ form.brand }}
+          </div>
+          
+          <div class="mb-4">
+            <label for="id_model" class="block">Model (optional):</label>
+            {{ form.model }}
+          </div>
+
           <div class="mb-4">
             <label for="id_description" class="block">Description*:</label>
             {{ form.description }}

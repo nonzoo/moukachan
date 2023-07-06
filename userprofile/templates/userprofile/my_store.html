@@ -1,6 +1,11 @@
 {% extends 'core/base.html' %}
 
 {% block title %}My Store{% endblock %}
+{% if messages %}
+{% for message in messages %}
+    <div class="mt-4 px-8 py-4 bg-teal-200 text-teal-800 rounded-md">{{message}}</div>
+{% endfor %}
+{% endif %}
 
 {% block content %}  
     <h1 class = "text-2xl font-serif">My Store</h1>
