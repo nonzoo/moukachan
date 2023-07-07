@@ -102,9 +102,11 @@
                         </a>
                     </p>
                     <p>
-                        <a href="https://wa.me/{{ owner_profile.company_whatsapp_number }}?text=I am interested in this Item -- {{ protocol }}://{{ domain }}{% url 'product_detail' product.category.slug product.subcategory.slug product.slug %}" class="block text-center">
-                            <button type="button" class="w-full py-2 px-4 bg-green-500 text-white rounded-md hover:bg-green-600">WhatsApp</button>
-                        </a>
+                            <button type="button" class="w-full py-2 px-4 bg-green-500 text-white rounded-md hover:bg-green-600">
+                                <a href="https://wa.me/{{ owner_profile.company_whatsapp_number }}?text=I%20am%20interested%20in%20this%20Item%20--%20{{ protocol }}%3A%2F%2F{{ domain }}{% url 'product_detail' product.category.slug product.subcategory.slug product.slug %}" class="block text-center">WhatsApp</a>
+                            </button>
+                        
+                        
                     </p>
                     <p>
                         <i class="fa fa-map-marker text-2xl" aria-hidden="true"></i>
