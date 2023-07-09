@@ -7,7 +7,7 @@ admin.site.register(Subcategory)
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ['title','user','price', 'category','condition']
+    list_display = ['title','user','price', 'category','condition','created_at']
     search_fields = ['user__username', 'title', 'condition']
 
 
