@@ -1,6 +1,6 @@
 .env
 .venv
-media/uploads/product_image
+media/uploads/product_images
 media/uploads/profile_pic
 *.pyc
 project/settings.py
