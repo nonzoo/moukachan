@@ -1,6 +1,6 @@
 .env
 .venv
-uploads
+media/uploads/
 *.pyc
 project/settings.py
 db.sqlite3
